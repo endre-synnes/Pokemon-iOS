@@ -11,4 +11,7 @@ import UIKit
 class EvolutionModel {
     var num : String = ""
 
+    init(num: String) {
+        self.num = num
+    }
 }

@@ -7,16 +7,14 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class FirstViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    let names = [
-        "Bulbasaur", "Ivysaur", "Venusar", "Charmender", "Charmeleon", "Charizard",
-        "Bulbasaur", "Ivysaur", "Venusar", "Charmender", "Charmeleon", "Charizard",
-        "Bulbasaur", "Ivysaur", "Venusar", "Charmender", "Charmeleon", "Charizard",
-        "Bulbasaur", "Ivysaur", "Venusar", "Charmender", "Charmeleon", "Charizard",
-        "Bulbasaur", "Ivysaur", "Venusar", "Charmender", "Charmeleon", "Charizard"
-        ]
+    var pokemons = [PokemonModel]()
+    
+    let url = "https://my-pokemon-api.herokuapp.com/api/pokemon?limit=151"
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -27,22 +25,38 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
         layout.itemSize = CGSize(width: width, height: width)
-        //Do any additional setup after loading the view, typically from a nib.
+        
+        getPokemonData(url: url)
+    }
+    
+    func reloadPokemons(){
+        self.collectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return names.count
+        return pokemons.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CustomCollectionViewCell
         
-        cell.pokemonName.text = names[indexPath.item]
+        cell.contentView.layer.cornerRadius = 30.0
+        cell.contentView.layer.borderWidth = 1.0
+        cell.contentView.layer.borderColor = UIColor.clear.cgColor
+        cell.contentView.layer.masksToBounds = true
+        cell.layer.shadowColor = UIColor.lightGray.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        cell.layer.shadowRadius = 2.0
+        cell.layer.shadowOpacity = 0.3
+        cell.layer.masksToBounds = false
+        cell.layer.shadowPath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: cell.contentView.layer.cornerRadius).cgPath
         
-        let url = URL(string: "https://www.serebii.net/pokemongo/pokemon/001.png")
+        cell.pokemonName.text = pokemons[indexPath.item].name
+        let imgUrl = URL(string: pokemons[indexPath.item].img)
+        cell.pokemon = pokemons[indexPath.item]
         
-        URLSession.shared.dataTask(with: url!) {
+        URLSession.shared.dataTask(with: imgUrl!) {
             (data, response, error) in
             if error != nil {
                 print(error!)
@@ -55,24 +69,54 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
             
         }.resume()
         
-        
-        
-        //do {
-        //    let url = URL(string: "http://verona-api.municipiumstaging.it/system/images/image/image/22/app_1920_1280_4.jpg")
-       //     let data = try Data(contentsOf: url!)
-       //     cell.pokemonImg.image = UIImage(data: data)
-        //}
-        //catch{
-         //   print(error)
-        //}
-        
         return cell
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
     }
     
+    
+    func getPokemonData(url: String) {
+        
+        Alamofire.request(url, method: .get).responseJSON {
+            response in
+            if response.result.isSuccess {
+                print("Success!")
+                
+                let pokemonJSON : JSON = JSON(response.result.value!)
+                self.parceJSON(json: pokemonJSON)
+                
+                self.reloadPokemons()
+                
+            } else {
+                print("Error \(String(describing: response.result.error))")
+            }
+        }
+    }
+    
+    
+    func parceJSON(json: JSON) {
+        let list = json["data"]["list"].arrayValue
+        pokemons = list.map({parsePokemon(json: $0)})
+    }
+    
+    
+    func parsePokemon(json: JSON) -> PokemonModel {
+        let pokemon = PokemonModel()
+        
+        pokemon.name = json["name"].stringValue
+        pokemon.candy_count = json["candy_count"].intValue
+        pokemon.egg = json["egg"].stringValue
+        pokemon.id = json["id"].stringValue
+        pokemon.img = json["img"].stringValue
+        pokemon.num = json["num"].stringValue
+        pokemon.prev_evolution = json["prev_evolution"].arrayValue.map({$0["num"].stringValue})
+        pokemon.next_evolution = json["next_evolution"].arrayValue.map({$0["num"].stringValue})
+        
+        return pokemon
+    }
 
 }
 

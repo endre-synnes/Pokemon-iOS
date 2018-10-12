@@ -14,4 +14,5 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var pokemonImg: UIImageView!
     
+    var pokemon: PokemonModel?
 }

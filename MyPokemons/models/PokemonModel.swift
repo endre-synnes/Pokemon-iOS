@@ -17,6 +17,6 @@ class PokemonModel {
     var egg : String = ""
     var type : [String]? = nil
     var weaknesses : [String]? = nil
-    var prev_evolution : [EvolutionModel]? = nil
-    var next_evolution : [EvolutionModel]? = nil
+    var prev_evolution : [String]? = nil
+    var next_evolution : [String]? = nil
 }
