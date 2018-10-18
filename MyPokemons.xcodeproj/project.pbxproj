@@ -14,7 +14,9 @@
 		EE7F6AD22166A754009CB4C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE7F6AD02166A754009CB4C1 /* Main.storyboard */; };
 		EE7F6AD42166A756009CB4C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE7F6AD32166A756009CB4C1 /* Assets.xcassets */; };
 		EE7F6AD72166A756009CB4C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE7F6AD52166A756009CB4C1 /* LaunchScreen.storyboard */; };
+		EEA707A92177E9F5006BD767 /* ColorConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA707A82177E9F5006BD767 /* ColorConverter.swift */; };
 		EED4B66A2168D95900A726CA /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EED4B6692168D95900A726CA /* CustomCollectionViewCell.swift */; };
+		EEDA651F21723DBC00E5F530 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEDA651E21723DBC00E5F530 /* DetailViewController.swift */; };
 		EEEC6AF72169522800B1B121 /* PokemonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEC6AF62169522800B1B121 /* PokemonModel.swift */; };
 		EEEC6AF9216959F300B1B121 /* EvolutionsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEC6AF8216959F300B1B121 /* EvolutionsModel.swift */; };
 /* End PBXBuildFile section */
@@ -31,7 +33,9 @@
 		EE7F6AD32166A756009CB4C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EE7F6AD62166A756009CB4C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE7F6AD82166A756009CB4C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EEA707A82177E9F5006BD767 /* ColorConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConverter.swift; sourceTree = "<group>"; };
 		EED4B6692168D95900A726CA /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
+		EEDA651E21723DBC00E5F530 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		EEEC6AF62169522800B1B121 /* PokemonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonModel.swift; sourceTree = "<group>"; };
 		EEEC6AF8216959F300B1B121 /* EvolutionsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolutionsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -86,17 +90,27 @@
 		EE7F6AC92166A754009CB4C1 /* MyPokemons */ = {
 			isa = PBXGroup;
 			children = (
+				EEA707A72177E99D006BD767 /* utils */,
 				EEEC6AF52169518600B1B121 /* models */,
 				EE7F6ACA2166A754009CB4C1 /* AppDelegate.swift */,
 				EE7F6ACC2166A754009CB4C1 /* FirstViewController.swift */,
 				EED4B6692168D95900A726CA /* CustomCollectionViewCell.swift */,
 				EE7F6ACE2166A754009CB4C1 /* SecondViewController.swift */,
 				EE7F6AD02166A754009CB4C1 /* Main.storyboard */,
+				EEDA651E21723DBC00E5F530 /* DetailViewController.swift */,
 				EE7F6AD32166A756009CB4C1 /* Assets.xcassets */,
 				EE7F6AD52166A756009CB4C1 /* LaunchScreen.storyboard */,
 				EE7F6AD82166A756009CB4C1 /* Info.plist */,
 			);
 			path = MyPokemons;
+			sourceTree = "<group>";
+		};
+		EEA707A72177E99D006BD767 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				EEA707A82177E9F5006BD767 /* ColorConverter.swift */,
+			);
+			path = utils;
 			sourceTree = "<group>";
 		};
 		EEEC6AF52169518600B1B121 /* models */ = {
@@ -238,6 +252,8 @@
 				EE7F6ACD2166A754009CB4C1 /* FirstViewController.swift in Sources */,
 				EEEC6AF72169522800B1B121 /* PokemonModel.swift in Sources */,
 				EED4B66A2168D95900A726CA /* CustomCollectionViewCell.swift in Sources */,
+				EEA707A92177E9F5006BD767 /* ColorConverter.swift in Sources */,
+				EEDA651F21723DBC00E5F530 /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

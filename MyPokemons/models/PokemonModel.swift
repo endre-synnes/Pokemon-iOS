@@ -19,4 +19,5 @@ class PokemonModel {
     var weaknesses : [String]? = nil
     var prev_evolution : [String]? = nil
     var next_evolution : [String]? = nil
+    var imageView : UIImage? = nil
 }

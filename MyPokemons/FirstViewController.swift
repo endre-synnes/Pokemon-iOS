@@ -14,6 +14,8 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     var pokemons = [PokemonModel]()
     
+    var currentPokemon = PokemonModel()
+    
     let url = "https://my-pokemon-api.herokuapp.com/api/pokemon?limit=151"
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -25,7 +27,6 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         
         layout.itemSize = CGSize(width: width, height: width)
-        
         getPokemonData(url: url)
     }
     
@@ -34,6 +35,7 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(pokemons.count)
         return pokemons.count
     }
 
@@ -64,7 +66,9 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
             }
             
             DispatchQueue.main.async {
-                cell.pokemonImg.image = UIImage(data: data!)
+                let img = UIImage(data: data!)
+                cell.pokemonImg.image = img
+                self.pokemons[indexPath.item].imageView = img
             }
             
         }.resume()
@@ -75,8 +79,16 @@ class FirstViewController: UIViewController, UICollectionViewDataSource, UIColle
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(indexPath.item)
+        currentPokemon = pokemons[indexPath.item]
+        performSegue(withIdentifier: "details", sender: self)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let detailsView = segue.destination as! DetailViewController
+        detailsView.pokemon = currentPokemon
+        detailsView.image = currentPokemon.imageView!
+        detailsView.name = currentPokemon.name
+    }
     
     func getPokemonData(url: String) {
         
